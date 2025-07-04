@@ -4,10 +4,10 @@ const inter = Inter({ subsets: ["latin"] });
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import "./globals.css";
-// import {
-//   ClerkProvider,
-// } from '@clerk/nextjs'
-import SessionWrapper from "@/components/SessionWrapper";
+import {
+  ClerkProvider,
+} from '@clerk/nextjs'
+
 
 export const metadata = {
   title: "Bachat Bhai",
@@ -17,19 +17,17 @@ export default function RootLayout({ children }) {
 
   return (
     <>
-      {/* <ClerkProvider> */}
+      <ClerkProvider>
         <html lang="en">
           <body className={`${inter}`}>
-            <SessionWrapper>
               <Navbar />
               <div className="min-h-screen">
                 {children}
               </div>
               <Footer />
-            </SessionWrapper>
           </body>
         </html>
-      {/* </ClerkProvider> */}
+      </ClerkProvider>
     </>
   )
 }
