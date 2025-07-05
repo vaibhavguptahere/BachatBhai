@@ -11,7 +11,9 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { LayoutDashboard, PenBox, TrashIcon, Wallet } from 'lucide-react'
 import { Button } from './ui/button'
-const Navbar = () => {
+import { checkUser } from '@/lib/checkUser'
+const Navbar = async () => {
+  await checkUser();
   return (
     <div className='fixed top-0 w-full bg-white/80 z-50 border-b backdrop-blur-md'>
       <nav className='container mx-auto px-4 py-4 flex items-center justify-between'>
