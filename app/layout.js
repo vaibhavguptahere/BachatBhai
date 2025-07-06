@@ -7,6 +7,7 @@ import "./globals.css";
 import {
   ClerkProvider,
 } from '@clerk/nextjs'
+import { Toaster } from "@/components/ui/sonner"
 
 export const metadata = {
   title: "Bachat Bhai",
@@ -19,6 +20,7 @@ export default function RootLayout({ children }) {
       <ClerkProvider>
         <html lang="en">
           <body className={`${inter}`}>
+            <Toaster />
             <Navbar />
             <div className="min-h-screen">
               {children}

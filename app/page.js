@@ -18,8 +18,9 @@ import { motion, useScroll, useSpring } from "motion/react"
 import dynamic from 'next/dynamic';
 
 export default function Home() {
+
+  // using for smooth scroll
   const lenis = useLenis((lenis) => {
-    // called every scroll
     console.log(lenis)
   })
   const { scrollYProgress } = useScroll()
