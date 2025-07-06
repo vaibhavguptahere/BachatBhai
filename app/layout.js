@@ -8,7 +8,6 @@ import {
   ClerkProvider,
 } from '@clerk/nextjs'
 import { Toaster } from "@/components/ui/sonner"
-
 export const metadata = {
   title: "Bachat Bhai",
   description: "AI Powered Finance Tracker",
@@ -20,7 +19,7 @@ export default function RootLayout({ children }) {
       <ClerkProvider>
         <html lang="en">
           <body className={`${inter}`}>
-            <Toaster />
+            <Toaster expand={false} richColors closeButton />
             <Navbar />
             <div className="min-h-screen">
               {children}
@@ -28,7 +27,7 @@ export default function RootLayout({ children }) {
             <Footer />
           </body>
         </html>
-      </ClerkProvider>
+      </ClerkProvider >
     </>
   )
 }
