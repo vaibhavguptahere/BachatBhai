@@ -1,3 +1,4 @@
+"use client"
 import Hero from "@/components/Hero";
 import { featuresData, howItWorksData } from "@/data/landing";
 import {
@@ -12,11 +13,39 @@ import {
 
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { ReactLenis, useLenis } from 'lenis/react'
+import { motion, useScroll, useSpring } from "motion/react"
+import dynamic from 'next/dynamic';
 
 export default function Home() {
+  const lenis = useLenis((lenis) => {
+    // called every scroll
+    console.log(lenis)
+  })
+  const { scrollYProgress } = useScroll()
+  const scaleX = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001,
+  })
 
   return (
+
     <div className="mt-40">
+      <motion.div
+        id="scroll-indicator"
+        style={{
+          scaleX,
+          position: "fixed",
+          top: 0,
+          left: 0,
+          right: 0,
+          height: 10,
+          originX: 0,
+          backgroundColor: "blue",
+        }}
+      />
+      <ReactLenis root />
       <Hero />
 
       <section className="py-20 bg-blue-50">

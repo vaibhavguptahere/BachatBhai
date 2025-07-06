@@ -8,7 +8,6 @@ import {
   ClerkProvider,
 } from '@clerk/nextjs'
 
-
 export const metadata = {
   title: "Bachat Bhai",
   description: "AI Powered Finance Tracker",
@@ -20,11 +19,11 @@ export default function RootLayout({ children }) {
       <ClerkProvider>
         <html lang="en">
           <body className={`${inter}`}>
-              <Navbar />
-              <div className="min-h-screen">
-                {children}
-              </div>
-              <Footer />
+            <Navbar />
+            <div className="min-h-screen">
+              {children}
+            </div>
+            <Footer />
           </body>
         </html>
       </ClerkProvider>

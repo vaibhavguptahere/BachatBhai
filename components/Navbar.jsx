@@ -15,7 +15,7 @@ import { checkUser } from '@/lib/checkUser'
 const Navbar = async () => {
   await checkUser();
   return (
-    <div className='fixed top-0 w-full bg-white/80 z-50 border-b backdrop-blur-md'>
+    <div className='fixed top-0 w-full bg-white/80 z-50 border-b backdrop-blur-md mt-1'>
       <nav className='container mx-auto px-4 py-4 flex items-center justify-between'>
         <Link href='/'>
           <div className="flex justify-center">

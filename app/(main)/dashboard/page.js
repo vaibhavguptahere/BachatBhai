@@ -1,11 +1,20 @@
+"use client"
 import CreateAccountDrawer from '@/components/create-account-drawer'
 import { Card, CardContent } from '@/components/ui/card'
 import { Plus } from 'lucide-react'
 import React from 'react'
+import { ReactLenis, useLenis } from 'lenis/react'
 
 const DashboardPage = () => {
+  const lenis = useLenis((lenis) => {
+    // called every scroll
+    console.log(lenis)
+  })
   return (
+
     <div className='px-5'>
+       {/* Making scroll more smoothly */}
+      <ReactLenis root />
 
       {/* Budget process */}
 
