@@ -3,17 +3,23 @@
 import { auth } from "@clerk/nextjs/server";
 import { db } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
+import { _includes } from "zod/v4/core";
 
+const serializeTransaction = (obj) => {
+    const serialized = { ...obj };
+
+    if (obj.balance) {
+        serialized.balance = obj.balance.toNumber();
+    }
+
+    if (obj.amount) {
+        serialized.amount = obj.amount.toNumber();
+    }
+    return serialized;
+};
+
+// Defining Function to create the account
 export async function createAccount(data) {
-
-    const serializeTransaction = (obj) => {
-        const serialized = { ...obj };
-
-        if (obj.balance) {
-            serialized.balance = obj.balance.toNumber();
-        }
-    };
-
 
     try {
         const { userId } = await auth();
@@ -64,4 +70,39 @@ export async function createAccount(data) {
     } catch (error) {
         throw new Error(error.message);
     }
+}
+
+// Defining Function to Get User Account on the dashboard
+
+export async function getUserAccounts() {
+
+    const { userId } = await auth();
+    if (!userId) {
+        throw new Error("Unauthorised");
+    }
+    const user = await db.user.findUnique({
+        where: { clerkUserId: userId }
+    });
+
+    if (!user) {
+        throw new Error("User not found")
+    }
+
+    const accounts = await db.account.findMany({
+        where: { userId: user.Id },
+        orderBy: { createdAt: "desc" },
+        include: {
+            _count: {
+                select: {
+                    transactions: true,
+
+                }
+            }
+        }
+    });
+
+
+    const serializeAccount = accounts.map(serializeTransaction);
+    return serializeAccount;
+
 }

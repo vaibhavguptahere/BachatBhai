@@ -1,7 +1,7 @@
 "use client"
 import React from 'react'
 import { motion, useScroll, useSpring } from "motion/react"
-const account = () => {
+const AccountsPage = ({ params }) => {
   const { scrollYProgress } = useScroll()
   const scaleX = useSpring(scrollYProgress, {
     stiffness: 100,
@@ -10,7 +10,7 @@ const account = () => {
   })
 
   return (
-    <div>
+    <div className='mt-40'>
       <motion.div
         id="scroll-indicator"
         style={{
@@ -24,8 +24,9 @@ const account = () => {
           backgroundColor: "blue",
         }}
       />
+      {params.id}
     </div>
   )
 }
 
-export default account
+export default AccountsPage

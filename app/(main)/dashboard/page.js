@@ -1,35 +1,40 @@
-"use client"
 import CreateAccountDrawer from '@/components/create-account-drawer'
 import { Card, CardContent } from '@/components/ui/card'
 import { Plus } from 'lucide-react'
 import React from 'react'
-import { ReactLenis, useLenis } from 'lenis/react'
-import { motion, useScroll, useSpring } from "motion/react"
+// import { ReactLenis, useLenis } from 'lenis/react'
+// import { motion, useScroll, useSpring } from "motion/react"
+import { getUserAccounts } from '@/actions/dashboard'
+import AccountCard from './_components/account-card'
 
-const DashboardPage = () => {
+async function DashboardPage() {
 
-  // Added for smooth scroll
-  const lenis = useLenis((lenis) => {
-    // called every scroll
-    console.log(lenis)
-  })
 
-  // Progress bar on top
-  const { scrollYProgress } = useScroll()
-  const scaleX = useSpring(scrollYProgress, {
-    stiffness: 100,
-    damping: 30,
-    restDelta: 0.001,
-  })
+
+  // // Added for smooth scroll
+  // const lenis = useLenis((lenis) => {
+  //   // called every scroll
+  //   console.log(lenis)
+  // })
+
+  // // Progress bar on top
+  // const { scrollYProgress } = useScroll()
+  // const scaleX = useSpring(scrollYProgress, {
+  //   stiffness: 100,
+  //   damping: 30,
+  //   restDelta: 0.001,
+  // })
+
+  const accounts = await getUserAccounts();
 
   return (
 
     <div className='px-5'>
-      {/* Making scroll more smoothly */}
-      <ReactLenis root />
+      {/* Making scroll more smoothly
+      <ReactLenis root /> */}
 
       {/* Progress Bar on top */}
-      <motion.div
+      {/* <motion.div
         id="scroll-indicator"
         style={{
           scaleX,
@@ -41,7 +46,7 @@ const DashboardPage = () => {
           originX: 0,
           backgroundColor: "blue",
         }}
-      />
+      /> */}
 
       {/* Budget process */}
 
@@ -59,8 +64,13 @@ const DashboardPage = () => {
             </CardContent>
           </Card>
         </CreateAccountDrawer>
-      </div>
 
+        {accounts.length > 0 && accounts?.map((account) => {
+          return <AccountCard key={account.id} account={account} />;
+        })}
+
+
+      </div>
     </div>
   )
 }

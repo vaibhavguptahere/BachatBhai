@@ -1,5 +1,4 @@
 import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server';
-import { createRouteLoader } from 'next/dist/client/route-loader';
 
 // this is implemented to redirect the user into login page when they open these given pages without signin
 const isProtectedRoute = createRouteMatcher([
