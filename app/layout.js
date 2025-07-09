@@ -8,6 +8,8 @@ import {
   ClerkProvider,
 } from '@clerk/nextjs'
 import { Toaster } from "@/components/ui/sonner"
+import LenisProvider from "@/components/LenisProvider";
+import ScrollProgressBar from "@/components/ScrollProgressBar";
 export const metadata = {
   title: "Bachat Bhai",
   description: "AI Powered Finance Tracker",
@@ -19,12 +21,16 @@ export default function RootLayout({ children }) {
       <ClerkProvider>
         <html lang="en">
           <body className={`${inter}`}>
-            <Toaster expand={false} richColors closeButton />
-            <Navbar />
-            <div className="min-h-screen">
-              {children}
-            </div>
-            <Footer />
+            <LenisProvider>
+              <ScrollProgressBar />
+
+              <Toaster expand={false} richColors closeButton />
+              <Navbar />
+              <div className="min-h-screen">
+                {children}
+              </div>
+              <Footer />
+            </LenisProvider>
           </body>
         </html>
       </ClerkProvider >

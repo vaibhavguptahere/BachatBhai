@@ -18,6 +18,12 @@ And here is the code to do this-
 </Suspense>
 ```
 
+---
+- Using Lenis for smooth scrolling as a client component and adding it in the layout.
+- Using Motion Progress Bar for top of the page as a client component and adding it in the layout.
+- Using ScrollRevealSection for the scroll animation of the section, we have to add them at the start and end of the sections.
+---
+
 - Using Actions folder to write the backend api code instead of api folder inside the app directory.
 (don't forget to add "use server" on the top of the file)
 
