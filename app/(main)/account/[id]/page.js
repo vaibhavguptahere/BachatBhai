@@ -1,30 +1,31 @@
-"use client"
 import React from 'react'
-import { motion, useScroll, useSpring } from "motion/react"
-const AccountsPage = ({ params }) => {
-  const { scrollYProgress } = useScroll()
-  const scaleX = useSpring(scrollYProgress, {
-    stiffness: 100,
-    damping: 30,
-    restDelta: 0.001,
-  })
+import { getAccountWithTransactions } from '@/actions/account'
+import { notFound } from 'next/navigation';
+const AccountsPage = async ({ params }) => {
+  const accountData = await getAccountWithTransactions(params.id);
+
+  if (!accountData) {
+    notFound();
+  }
+  const { transactions, ...account } = accountData;
 
   return (
-    <div className='mt-40'>
-      <motion.div
-        id="scroll-indicator"
-        style={{
-          scaleX,
-          position: "fixed",
-          top: 0,
-          left: 0,
-          right: 0,
-          height: 10,
-          originX: 0,
-          backgroundColor: "blue",
-        }}
-      />
-      {params.id}
+    <div className='mt-20 space-y-8 px-5 gap-4 items-end justify-between'>
+      {/* Main Account Show Section */}
+      <div className="">
+        <h1>{account.name}</h1>
+        <p>{account.type.charAt(0) + account.type.slice(1).toLowerCase()} Account</p>
+      </div >
+
+      <div className="">
+        <div className="">Rs {parseFloat(account.balance).toFixed(2)}</div>
+        <p>{account._count.transactions} Transactions</p>
+      </div>
+
+      {/* Chart Section */}
+
+      {/* Transaction Table */}
+
     </div>
   )
 }
