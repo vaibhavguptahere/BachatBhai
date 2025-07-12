@@ -33,6 +33,12 @@ And here is the code to do this-
 - using layout.js inside this ![alt text](image.png) just to give layout to both of the routes, it makes simple to give same design to both components/routes.
 
 ---
+
+- Using 'date-fns' to handle date easily in nextjs project.
+```bash
+npm i date-fns
+```
+---
 - Using Postgress SQL as a database.
 - Using Prisma (like mongoose for no sql) to create the schema and all.
 - Using Supabase instead of firebase for sql database to create and view of the table.
