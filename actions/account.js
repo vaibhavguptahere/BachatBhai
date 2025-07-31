@@ -89,3 +89,16 @@ export async function getAccountWithTransactions(accountId) {
         transactionCount: account._count.transactions,
     };
 }
+
+export async function bulkDeleteTransactions(transactionIds) {
+    const { userId } = await auth();
+    if (!userId) throw new Error("Unauthorized");
+
+    const user = await db.user.findUnique({
+        where: { clerkUserId: userId },
+    });
+
+    if (!user) {
+        throw new Error("User not found");
+    }
+}
