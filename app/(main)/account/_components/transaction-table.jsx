@@ -1,10 +1,9 @@
 "use client"
 
-import React, { useMemo, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import {
     Table,
     TableBody,
-    TableCaption,
     TableCell,
     TableFooter,
     TableHead,
@@ -35,10 +34,14 @@ import {
     SelectValue,
 } from "@/components/ui/select"
 import { Badge } from '@/components/ui/badge'
-import { ChevronDown, ChevronUp, Clock, MoreHorizontal, RefreshCcw, RefreshCw, Router, Search, Trash, X } from 'lucide-react'
+import { ChevronDown, ChevronUp, Clock, MoreHorizontal, MoveLeftIcon, MoveRightIcon, RefreshCw, Search, Trash, X } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { useRouter } from 'next/navigation'
 import { Input } from '@/components/ui/input'
+import useFetch from '@/hooks/use-fetch'
+import { bulkDeleteTransactions } from '@/actions/account'
+import { BarLoader } from 'react-spinners'
+import { toast } from 'sonner'
 
 const RECURRING_INTERVALS = {
     DAILY: "Daily",
@@ -56,6 +59,24 @@ const TransactionTable = ({ transactions }) => {
     const [searchTerm, setSearchTerm] = useState("");
     const [typeFilter, setTypeFilter] = useState("");
     const [recurringFilter, setRecurringFilter] = useState("");
+    const {
+        loading: deleteLoading,
+        fn: deleteFn,
+        data: deleted,
+    } = useFetch(bulkDeleteTransactions)
+
+    const handleBulkDelete = async () => {
+        if (!window.confirm(`Are you sure you want to delete the ${selectedIds.length} transactions?`)) {
+            return;
+        }
+        deleteFn(selectedIds);
+    };
+
+    useEffect(() => {
+        if (deleted && !deleteLoading) {
+            toast.error("Transactions deleted successfully");
+        }
+    }, [deleted, deleteLoading]);
 
     const filteredAndSortedTransactions = useMemo(() => {
         let result = [...transactions];
@@ -131,9 +152,6 @@ const TransactionTable = ({ transactions }) => {
                 : filteredAndSortedTransactions.map(t => t.id)
         );
     };
-    const handleBulkDelete = () => {
-
-    };
 
     const handleClearFilters = () => {
         setSearchTerm("");
@@ -142,8 +160,23 @@ const TransactionTable = ({ transactions }) => {
         setSelectedIds([]);
     };
 
+    const itemsPerPage = 20;
+    const totalPages = Math.ceil((filteredAndSortedTransactions?.length || 0) / itemsPerPage);
+    const [currentPage, setPage] = useState(1);
+
+    // Slice only the current page's data
+    const paginatedData = filteredAndSortedTransactions.slice(
+        (currentPage - 1) * itemsPerPage,
+        currentPage * itemsPerPage
+    );
+
     return (
         <div>
+            {/* Loading screen when Deleting the transactions */}
+            {deleteLoading &&
+                (<BarLoader className='mt-4' width={"100%"} color="#9333ea" loading={deleteLoading} />)
+            }
+
             {/* Search Filters */}
 
             <div className="flex flex-col sm:flex-row gap-4 mb-4">
@@ -242,7 +275,7 @@ const TransactionTable = ({ transactions }) => {
                             </TableCell>
                         </TableRow>
                     ) : (
-                        filteredAndSortedTransactions.map((transaction) => (
+                        filteredAndSortedTransactions.slice(currentPage * 20 - 20, currentPage * 20).map((transaction) => (
                             <TableRow key={transaction.id}>
                                 <TableCell className="font-medium">
                                     <Checkbox onCheckedChange={() => handleSelect(transaction.id)} checked={selectedIds.includes(transaction.id)} />
@@ -315,6 +348,30 @@ const TransactionTable = ({ transactions }) => {
                     </TableRow>
                 </TableFooter>
             </Table>
+            {totalPages > 0 && (
+                <div className="pagination-container">
+                    <button
+                        className="page-button"
+                        disabled={currentPage === 1}
+                        onClick={() => setPage(currentPage - 1)}
+                    >
+                        <MoveLeftIcon />
+                    </button>
+
+                    <span className="page-label">
+                        Page {currentPage} of {totalPages}
+                    </span>
+
+                    <button
+                        className="page-button"
+                        disabled={currentPage === totalPages}
+                        onClick={() => setPage(currentPage + 1)}
+                    >
+                        <MoveRightIcon />
+                    </button>
+                </div>
+
+            )}
         </div>
     )
 }

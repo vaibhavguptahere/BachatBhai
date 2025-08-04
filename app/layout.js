@@ -6,6 +6,7 @@ import { Toaster } from "@/components/ui/sonner";
 import LenisProvider from "@/components/LenisProvider";
 import ScrollProgressBar from "@/components/ScrollProgressBar";
 import FinanceAssistant from "@/components/FinanceAssistant";
+import DisableRightClick from "@/components/DisableRightClick";
 export const metadata = {
   title: "Bachat Bhai",
   description: "AI Powered Finance Tracker",
@@ -16,10 +17,11 @@ export default function RootLayout({ children }) {
     <ClerkProvider>
       <html lang="en">
         <body>
+          <DisableRightClick />
           <LenisProvider>
             <ScrollProgressBar />
             <Toaster expand={false} richColors closeButton />
-            <FinanceAssistant/>
+            <FinanceAssistant />
             <Navbar />
             <div className="min-h-screen">{children}</div>
             <Footer />

@@ -146,3 +146,41 @@
 .hero-image.scrolled {
   transform: rotateX(0deg) scale(1) translateY(40px);
 }
+
+.pagination-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  margin-top: 20px;
+  padding: 12px;
+  border-radius: 10px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+}
+
+.page-button {
+  padding: 8px 12px;
+  background-color: white;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.page-button:hover:not(:disabled) {
+  background-color: #e5e7eb;
+}
+
+.page-button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.page-label {
+  font-size: 16px;
+  font-weight: 500;
+  color: #1f2937;
+}

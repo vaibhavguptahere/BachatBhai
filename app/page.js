@@ -3,12 +3,7 @@ import Hero from "@/components/Hero";
 import { featuresData, howItWorksData } from "@/data/landing";
 import {
   Card,
-  CardAction,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
+  CardContent
 } from "@/components/ui/card"
 
 import { Button } from "@/components/ui/button";
