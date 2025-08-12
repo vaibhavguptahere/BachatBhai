@@ -130,6 +130,18 @@
   .gradient-title {
     @apply bg-gradient-to-br from-blue-600 to-purple-600 font-extrabold tracking-tighter pr-2 pb-2 text-transparent bg-clip-text;
   }
+
+  .chat-container {
+    @apply bg-gray-50 text-gray-900;
+  }
+
+  .chat-message-user {
+    @apply bg-blue-600 text-white rounded-lg px-4 py-2 max-w-xs ml-auto;
+  }
+
+  .chat-message-ai {
+    @apply bg-white text-gray-900 border border-gray-200 rounded-lg px-4 py-2 max-w-xs;
+  }
 }
 
 .hero-image-wrapper {
