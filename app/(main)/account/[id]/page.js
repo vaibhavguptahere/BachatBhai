@@ -1,8 +1,10 @@
 import { Suspense } from "react";
 import { getAccountWithTransactions } from "@/actions/account";
 import { BarLoader } from "react-spinners";
-import TransactionTable  from "../_components/transaction-table";
+import TransactionTable from "../_components/transaction-table";
 import { notFound } from "next/navigation";
+import AccountChart from "../_components/account-chart";
+import ModernChatAssistant from "@/components/ModernChatAssistant";
 
 export default async function AccountPage({ params }) {
   const accountData = await getAccountWithTransactions(params.id);
@@ -37,11 +39,11 @@ export default async function AccountPage({ params }) {
       </div>
 
       {/* Chart Section */}
-      {/* <Suspense
+      <Suspense
         fallback={<BarLoader className="mt-4" width={"100%"} color="#9333ea" />}
       >
         <AccountChart transactions={transactions} />
-      </Suspense> */}
+      </Suspense>
 
       {/* Transactions Table */}
       <Suspense
@@ -49,6 +51,9 @@ export default async function AccountPage({ params }) {
       >
         <TransactionTable transactions={transactions} />
       </Suspense>
+
+      {/* Chat Assistant */}
+      <ModernChatAssistant />
     </div>
   );
 }
