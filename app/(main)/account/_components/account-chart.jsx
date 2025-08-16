@@ -4,7 +4,6 @@ import React, { useMemo, useState } from "react";
 import {
     BarChart,
     Bar,
-    Rectangle,
     XAxis,
     YAxis,
     CartesianGrid,
@@ -15,10 +14,7 @@ import {
 
 import {
     Card,
-    CardAction,
     CardContent,
-    CardDescription,
-    CardFooter,
     CardHeader,
     CardTitle,
 } from "@/components/ui/card"
@@ -30,7 +26,6 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select"
-import { date } from "zod";
 
 const DATE_RANGES = {
     "7D": { label: "Last 7 Days", days: 7 },
@@ -137,7 +132,7 @@ const AccountChart = ({ transactions }) => {
                                 <XAxis dataKey="date" />
                                 <YAxis fontSize={12} tickLine={false} axisLine={false} tickFormatter={(value) => `Rs. ${value}`} />
                                 <YAxis />
-                                <Tooltip />
+                                <Tooltip formatter={(value) => [`Rs. ${value}`, undefined]} />
                                 <Legend />
                                 <Bar
                                     dataKey="income"
