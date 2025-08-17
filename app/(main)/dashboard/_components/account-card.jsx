@@ -2,9 +2,7 @@
 import React, { useEffect } from 'react'
 import {
   Card,
-  CardAction,
   CardContent,
-  CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,

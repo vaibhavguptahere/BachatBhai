@@ -56,7 +56,7 @@ const AccountChart = ({ transactions }) => {
                 acc[date] = { date, income: 0, expense: 0 };
             }
 
-            if (transaction.type === "income") {
+            if (transaction.type.toLowerCase() === "income") {
                 acc[date].income += transaction.amount;
             } else {
                 acc[date].expense += transaction.amount;
@@ -74,8 +74,8 @@ const AccountChart = ({ transactions }) => {
     const totals = useMemo(() => {
         return filteredData.reduce(
             (acc, curr) => ({
-                income: acc.income + day.income,
-                expense: acc.expense + day.expense,
+                income: acc.income + curr.income,
+                expense: acc.expense + curr.expense,
             }),
             { income: 0, expense: 0 }
         );

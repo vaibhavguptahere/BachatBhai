@@ -2,7 +2,7 @@
 
 - Using NextJS as the main tool of building.
 - Using Shadcn components for prebuilded components.
-- Using Luicide icons to add the icons in the web app.
+- Using Lucide icons to add the icons in the web app.
 - USing Clerk for the authentication.
 
 ---
