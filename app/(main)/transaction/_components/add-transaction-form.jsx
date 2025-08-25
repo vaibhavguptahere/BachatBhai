@@ -3,7 +3,7 @@ import { updateDefaultAccount } from '@/actions/account'
 import useFetch from '@/hooks/use-fetch'
 import { accountSchema, transactionSchema } from '@/lib/schema'
 import { zodResolver } from '@hookform/resolvers/zod'
-import React, { useEffect } from 'react'
+import React, { Suspense, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import {
     Select,
@@ -27,6 +27,8 @@ import { Switch } from '@/components/ui/switch'
 import { useRouter } from 'next/navigation'
 import { toast } from 'sonner'
 import { createTransaction } from '@/actions/transaction'
+import ReceiptScanner from './receipt-scanner'
+import { BarLoader } from 'react-spinners'
 
 const AddTransactionForm = ({ accounts, categories }) => {
     const router = useRouter();
@@ -85,9 +87,23 @@ const AddTransactionForm = ({ accounts, categories }) => {
         (category) => category.type === type
     );
 
+    const handleScanComplete = (scannedData) => {
+        if (scannedData) {
+            setValue("amount", scannedData.amount.toString());
+            setValue("date", new Date(scannedData.date));
+            if (scannedData.description) {
+                setValue("description", scannedData.description);
+            }
+            if (scannedData.category) {
+                setValue("category", scannedData.category);
+            }
+        }
+    }
+
     return (
         <form className='space-y-6' onSubmit={handleSubmit(onSubmit)}>
             {/* AI Receipt Scanner */}
+            <ReceiptScanner onScanComplete={handleScanComplete} />
 
             {/* Create Transaction Form */}
             <div className='space-y-2'>
@@ -270,20 +286,33 @@ const AddTransactionForm = ({ accounts, categories }) => {
                     )}
                 </div>}
 
-            <div className="flex gap-4 items-center flex-col mb-20">
-                <Button
-                    type="button"
-                    variant={"outline"}
-                    className={"w-full"}
-                    onClick={() => router.back()}
-                >
-                    Cancel</Button>
-                <Button
-                    className="w-full"
-                    type="submit"
-                    disabled={transactionLoading}
-                >Create Transaction</Button>
-            </div>
+            <Suspense
+                fallback={<BarLoader className="mt-4" width={"100%"} color="#9333ea" />}
+            >
+                <div className="flex gap-4 items-center flex-col mb-20">
+                    {transactionLoading && (
+                        <BarLoader
+                            className="w-full"
+                            width={"100%"}
+                            color="#9333ea"
+                        />
+                    )}
+                    <Button
+                        type="button"
+                        variant={"outline"}
+                        className={"w-full"}
+                        onClick={() => router.back()}
+                    >
+                        Cancel</Button>
+                    <Button
+                        className="w-full"
+                        type="submit"
+                        disabled={transactionLoading}
+                    >
+                        {transactionLoading ? "Creating..." : "Create Transaction"}
+                    </Button>
+                </div>
+            </Suspense>
         </form >
     )
 }
