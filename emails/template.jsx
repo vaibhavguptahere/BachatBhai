@@ -10,6 +10,16 @@ import {
 } from "@react-email/components";
 import * as React from "react";
 
+// Currency formatter for INR
+const formatCurrency = (value) => {
+    if (value == null || isNaN(value)) return "0";
+    return new Intl.NumberFormat("en-IN", {
+        style: "currency",
+        currency: "INR",
+        maximumFractionDigits: 2,
+    }).format(Number(value));
+};
+
 export default function EmailTemplate({
     userName = "",
     type = "monthly-report",
@@ -33,39 +43,53 @@ export default function EmailTemplate({
                         <Section style={styles.statsContainer}>
                             <div style={styles.stat}>
                                 <Text style={styles.text}>Total Income</Text>
-                                <Text style={styles.heading}>${data?.stats?.totalIncome}</Text>
+                                <Text style={styles.value}>
+                                    {formatCurrency(data?.stats?.totalIncome)}
+                                </Text>
                             </div>
                             <div style={styles.stat}>
                                 <Text style={styles.text}>Total Expenses</Text>
-                                <Text style={styles.heading}>${data?.stats?.totalExpenses}</Text>
+                                <Text style={styles.value}>
+                                    {formatCurrency(data?.stats?.totalExpenses)}
+                                </Text>
                             </div>
                             <div style={styles.stat}>
                                 <Text style={styles.text}>Net</Text>
-                                <Text style={styles.heading}>
-                                    ${data?.stats?.totalIncome - data?.stats?.totalExpenses}
+                                <Text style={styles.value}>
+                                    {formatCurrency(
+                                        Number(data?.stats?.totalIncome || 0) -
+                                        Number(data?.stats?.totalExpenses || 0)
+                                    )}
                                 </Text>
                             </div>
                         </Section>
 
                         {/* Category Breakdown */}
-                        {data?.stats?.byCategory && (
-                            <Section style={styles.section}>
-                                <Heading style={styles.heading}>Expenses by Category</Heading>
-                                {Object.entries(data?.stats.byCategory).map(
-                                    ([category, amount]) => (
-                                        <div key={category} style={styles.row}>
-                                            <Text style={styles.text}>{category}</Text>
-                                            <Text style={styles.text}>${amount}</Text>
-                                        </div>
-                                    )
-                                )}
-                            </Section>
-                        )}
+                        {data?.stats?.byCategory &&
+                            Object.keys(data?.stats?.byCategory).length > 0 && (
+                                <Section style={styles.section}>
+                                    <Heading style={styles.sectionHeading}>
+                                        Expenses by Category
+                                    </Heading>
+                                    {Object.entries(data?.stats.byCategory).map(
+                                        ([category, amount]) => (
+                                            <div key={category} style={styles.row}>
+                                                <Text style={styles.text}>{category}</Text>
+                                                <Text style={styles.value}>
+                                                    {formatCurrency(amount)}
+                                                </Text>
+                                            </div>
+                                        )
+                                    )}
+                                </Section>
+                            )}
 
                         {/* AI Insights */}
-                        {data?.insights && (
+                        {data?.insights && data.insights.length > 0 && (
                             <Section style={styles.section}>
-                                <Heading style={styles.heading}>BaChatBhai Insights</Heading>
+                                <Heading style={styles.sectionHeading}>
+                                    BaChatBhai Insights
+                                </Heading>
                                 {data.insights.map((insight, index) => (
                                     <Text key={index} style={styles.text}>
                                         • {insight}
@@ -75,8 +99,8 @@ export default function EmailTemplate({
                         )}
 
                         <Text style={styles.footer}>
-                            Thank you for using BaChatBhai. Keep tracking your finances for better
-                            financial health!
+                            Thank you for using BaChatBhai. Keep tracking your finances for
+                            better financial health!
                         </Text>
                     </Container>
                 </Body>
@@ -100,18 +124,25 @@ export default function EmailTemplate({
                         <Section style={styles.statsContainer}>
                             <div style={styles.stat}>
                                 <Text style={styles.text}>Budget Amount</Text>
-                                <Text style={styles.heading}>Rs. {data?.budgetAmount}</Text>
+                                <Text style={styles.value}>
+                                    {formatCurrency(data?.budgetAmount)}
+                                </Text>
                             </div>
 
                             <div style={styles.stat}>
                                 <Text style={styles.text}>Spent So Far</Text>
-                                <Text style={styles.heading}>Rs. {data?.totalExpenses}</Text>
+                                <Text style={styles.value}>
+                                    {formatCurrency(data?.totalExpenses)}
+                                </Text>
                             </div>
 
                             <div style={styles.stat}>
                                 <Text style={styles.text}>Remaining</Text>
-                                <Text style={styles.heading}>
-                                    Rs. {data?.budgetAmount - data?.totalExpenses}
+                                <Text style={styles.value}>
+                                    {formatCurrency(
+                                        Number(data?.budgetAmount || 0) -
+                                        Number(data?.totalExpenses || 0)
+                                    )}
                                 </Text>
                             </div>
                         </Section>
@@ -143,7 +174,7 @@ const styles = {
         textAlign: "center",
         margin: "0 0 20px",
     },
-    heading: {
+    sectionHeading: {
         color: "#1f2937",
         fontSize: "20px",
         fontWeight: "600",
@@ -165,13 +196,19 @@ const styles = {
         padding: "12px",
         backgroundColor: "#fff",
         borderRadius: "4px",
-        boxShadow: "0 1px 2px rgba(0, 0, 0, 0.5)",
+        boxShadow: "0 1px 2px rgba(0, 0, 0, 0.05)",
     },
     row: {
         display: "flex",
         justifyContent: "space-between",
         padding: "12px 0",
         borderBottom: "1px solid #e5e7eb",
+    },
+    value: {
+        color: "#111827",
+        fontSize: "18px",
+        fontWeight: "700",
+        margin: "0 0 12px",
     },
     footer: {
         color: "#6b7280",
