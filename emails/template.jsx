@@ -44,21 +44,21 @@ export default function EmailTemplate({
                             <div style={styles.stat}>
                                 <Text style={styles.text}>Total Income</Text>
                                 <Text style={styles.value}>
-                                    {formatCurrency(data?.stats?.totalIncome)}
+                                    {formatCurrency(data?.stats?.totalIncome?.toFixed(2))}
                                 </Text>
                             </div>
                             <div style={styles.stat}>
                                 <Text style={styles.text}>Total Expenses</Text>
                                 <Text style={styles.value}>
-                                    {formatCurrency(data?.stats?.totalExpenses)}
+                                    {formatCurrency(data?.stats?.totalExpenses?.toFixed(2))}
                                 </Text>
                             </div>
                             <div style={styles.stat}>
                                 <Text style={styles.text}>Net</Text>
                                 <Text style={styles.value}>
                                     {formatCurrency(
-                                        Number(data?.stats?.totalIncome || 0) -
-                                        Number(data?.stats?.totalExpenses || 0)
+                                        Number(data?.stats?.totalIncome?.toFixed(2) || 0) -
+                                        Number(data?.stats?.totalExpenses?.toFixed(2) || 0)
                                     )}
                                 </Text>
                             </div>
@@ -125,14 +125,14 @@ export default function EmailTemplate({
                             <div style={styles.stat}>
                                 <Text style={styles.text}>Budget Amount</Text>
                                 <Text style={styles.value}>
-                                    {formatCurrency(data?.budgetAmount)}
+                                    {formatCurrency(data?.budgetAmount?.toFixed(2))}
                                 </Text>
                             </div>
 
                             <div style={styles.stat}>
                                 <Text style={styles.text}>Spent So Far</Text>
                                 <Text style={styles.value}>
-                                    {formatCurrency(data?.totalExpenses)}
+                                    {formatCurrency(data?.totalExpenses?.toFixed(2))}
                                 </Text>
                             </div>
 
@@ -140,8 +140,8 @@ export default function EmailTemplate({
                                 <Text style={styles.text}>Remaining</Text>
                                 <Text style={styles.value}>
                                     {formatCurrency(
-                                        Number(data?.budgetAmount || 0) -
-                                        Number(data?.totalExpenses || 0)
+                                        Number(data?.budgetAmount?.toFixed(2) || 0) -
+                                        Number(data?.totalExpenses?.toFixed(2) || 0)
                                     )}
                                 </Text>
                             </div>
