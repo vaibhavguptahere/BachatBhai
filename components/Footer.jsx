@@ -43,10 +43,10 @@ const Footer = () => {
                         <a href="https://www.linkedin.com/in/vaibhavguptahere-/" target="_blank" rel="noopener noreferrer" className="hover:text-blue-600">
                             <FaLinkedin size={22} />
                         </a>
-                        <a href="https://github.com/" target="_blank" rel="noopener noreferrer" className="hover:text-blue-600">
+                        <a href="https://github.com/vaibhavguptahere" target="_blank" rel="noopener noreferrer" className="hover:text-blue-600">
                             <FaGithub size={22} />
                         </a>
-                        <a href="mailto:your@email.com" className="hover:text-blue-600">
+                        <a href="mailto:guptavaibhavg2005@gmail.com" className="hover:text-blue-600">
                             <FaEnvelope size={22} />
                         </a>
                     </div>
@@ -56,7 +56,7 @@ const Footer = () => {
 
             {/* Bottom Bar */}
             <div className="border-t border-gray-200 dark:border-gray-700 mt-8 py-4 text-center text-sm text-gray-500 dark:text-gray-400">
-                Made with ❤️ by <span className="font-semibold">
+                Made by <span className="font-semibold">
                     <a href="https://www.linkedin.com/in/vaibhavguptahere-/" target="_blank" rel="noopener noreferrer">
                         Vaibhav Gupta
                     </a>
