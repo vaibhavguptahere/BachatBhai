@@ -20,9 +20,9 @@ const Navbar = async () => {
         <Link href='/'>
           <div className="flex justify-center items-center">
             <img
-              src="/logo.gif"
+              src="/busy.gif"
               alt="Logo"
-              className="h-8 w-10 mr-0.5"
+              className="h-9 w-10 mr-0.5"
             />
             <span className='font-extrabold text-2xl ml-1 font-verdana bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent'>
               BaChatBhai
