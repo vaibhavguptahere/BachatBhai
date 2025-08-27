@@ -18,9 +18,15 @@ const Navbar = async () => {
     <div className='fixed top-0 w-full bg-white/80 z-50 border-b backdrop-blur-md mt-1'>
       <nav className='container mx-auto px-4 py-4 flex items-center justify-between'>
         <Link href='/'>
-          <div className="flex justify-center">
-            <Wallet className="h-6 w-6 text-blue-600" />
-            <span className='font-extrabold text-xl ml-1 font-verdana bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent'>BaChatBhai</span>
+          <div className="flex justify-center items-center">
+            <img
+              src="/logo.gif"
+              alt="Logo"
+              className="h-8 w-10 mr-0.5"
+            />
+            <span className='font-extrabold text-2xl ml-1 font-verdana bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent'>
+              BaChatBhai
+            </span>
           </div>
         </Link>
 

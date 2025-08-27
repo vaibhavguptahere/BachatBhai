@@ -10,6 +10,9 @@ import { Analytics } from "@vercel/analytics/next"
 export const metadata = {
   title: "Bachat Bhai",
   description: "AI Powered Finance Tracker",
+  icons: {
+    icon: "/icon.png",
+  },
 };
 
 export default function RootLayout({ children }) {

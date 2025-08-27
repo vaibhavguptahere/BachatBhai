@@ -12,7 +12,7 @@ import ScrollRevealSection from "@/components/ScrollRevealSection";
 export default function Home() {
 
   return (
-
+    
     <div className="mt-40">
       <Hero />
       <ScrollRevealSection>
