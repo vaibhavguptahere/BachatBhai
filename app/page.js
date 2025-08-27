@@ -65,7 +65,9 @@ export default function Home() {
 
           <div className="container mx-auto px-8 text-center text-white">
             <h2 className="text-3xl font-bold text-center mb-4">Ready to take control of your finances?</h2>
-            <p className="text-blue-100 mb-8 max-w-2xl mx-auto">Let's join BaChatBhai and be a intelligent by managing the finances more smarter!</p>
+            <p className="text-blue-100 mb-8 max-w-2xl mx-auto">
+              Let&apos;s join BaChatBhai and be intelligent by managing the finances more smartly!
+            </p>
             <div className="flex items-center text-center justify-center">
               <Link href={"/sign-in"}>
                 <Button size="lg" className="px-14 py-5 bg-white text-blue-600 hover:bg-blue-50 animate-bounce">
