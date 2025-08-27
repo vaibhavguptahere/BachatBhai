@@ -18,7 +18,7 @@ import {
 import { format } from 'date-fns'
 import { ArrowDownRight, ArrowUpRight } from 'lucide-react'
 import { cn } from '@/lib/utils'
-import { Cell, Pie, PieChart, ResponsiveContainer } from 'recharts';
+import { Cell, Legend, Pie, PieChart, ResponsiveContainer } from 'recharts';
 
 const COLORS = [
     "#FF6B6B",
@@ -169,6 +169,7 @@ const DashboardOverview = ({ accounts, transactions }) => {
                                             />
                                         ))}
                                     </Pie>
+                                    <Legend />
                                 </PieChart>
                             </ResponsiveContainer>
                         </div>
