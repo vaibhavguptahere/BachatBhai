@@ -62,3 +62,9 @@ npx prisma init
 ```bash
 npx prisma migrate dev --name create_models
 ```
+
+# Run this cmd to run inngest locally
+
+```bash
+npx inngest-cli@latest dev
+```
