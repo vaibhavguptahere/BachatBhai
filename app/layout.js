@@ -6,6 +6,7 @@ import { Toaster } from "@/components/ui/sonner";
 import LenisProvider from "@/components/LenisProvider";
 import ScrollProgressBar from "@/components/ScrollProgressBar";
 import DisableRightClick from "@/components/DisableRightClick";
+import { Analytics } from "@vercel/analytics/next"
 export const metadata = {
   title: "Bachat Bhai",
   description: "AI Powered Finance Tracker",
@@ -16,6 +17,7 @@ export default function RootLayout({ children }) {
     <ClerkProvider>
       <html lang="en">
         <body>
+          <Analytics />
           <DisableRightClick />
           <LenisProvider>
             <ScrollProgressBar />
