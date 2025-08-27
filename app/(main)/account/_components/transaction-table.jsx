@@ -1,6 +1,7 @@
 "use client"
 
 import React, { useEffect, useMemo, useState } from 'react'
+import { endOfDay, format, startOfDay, subDays } from "date-fns";
 import {
     Table,
     TableBody,
@@ -14,12 +15,10 @@ import {
     DropdownMenu,
     DropdownMenuContent,
     DropdownMenuItem,
-    DropdownMenuLabel,
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { Checkbox } from '@/components/ui/checkbox'
-import { format } from 'date-fns'
 import { categoryColors } from '@/data/categories'
 import {
     Tooltip,
@@ -169,6 +168,59 @@ const TransactionTable = ({ transactions }) => {
         (currentPage - 1) * itemsPerPage,
         currentPage * itemsPerPage
     );
+
+    const DATE_RANGES = {
+        "7D": { label: "Last 7 Days", days: 7 },
+        "1M": { label: "Last 1 Month", days: 30 },
+        "3M": { label: "Last 3 Months", days: 90 },
+        "6M": { label: "Last 6 Months", days: 180 },
+        "ALL": { label: "All Time", days: null },
+    }
+
+    const [dateRange, setDataRange] = useState("1M");
+    const filteredData = useMemo(() => {
+        const range = DATE_RANGES[dateRange];
+        const now = new Date();
+        const startDate = range.days
+            ? startOfDay(subDays(now, range.days))
+            : startOfDay(new Date(0));
+
+
+        const filtered = transactions.filter(
+            (t) => new Date(t.date) >= startDate && new Date(t.date) <= endOfDay(now)
+        );
+
+        const grouped = filtered.reduce((acc, transaction) => {
+            const date = format(new Date(transaction.date), "MMM dd");
+
+            if (!acc[date]) {
+                acc[date] = { date, income: 0, expense: 0 };
+            }
+
+            if (transaction.type.toLowerCase() === "income") {
+                acc[date].income += transaction.amount;
+            } else {
+                acc[date].expense += transaction.amount;
+            }
+
+            return acc;
+        }, {});
+
+        // Convert to array and sort by date
+        return Object.values(grouped).sort((a, b) =>
+            new Date(a.date) - new Date(b.date)
+        );
+    }, [transactions, dateRange]);
+
+    const totals = useMemo(() => {
+        return filteredData.reduce(
+            (acc, curr) => ({
+                income: acc.income + curr.income,
+                expense: acc.expense + curr.expense,
+            }),
+            { income: 0, expense: 0 }
+        );
+    }, [filteredData]);
 
     return (
         <div>
@@ -344,7 +396,12 @@ const TransactionTable = ({ transactions }) => {
                 <TableFooter>
                     <TableRow>
                         <TableCell colSpan={7}>Total</TableCell>
-                        <TableCell className="text-right">Rs 2,500.00</TableCell>
+                        <TableCell className="text-right">
+                            <p className={`rext-lg font-bold ${totals.income - totals.expense >= 0
+                                ? "text-green-500"
+                                : "text-red-500"
+                                }`}>Rs. {(totals.income - totals.expense).toFixed(2)}</p>
+                        </TableCell>
                     </TableRow>
                 </TableFooter>
             </Table>
