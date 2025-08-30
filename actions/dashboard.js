@@ -88,15 +88,13 @@ export async function getUserAccounts() {
     if (!user) {
         throw new Error("User not found")
     }
-
     const accounts = await db.account.findMany({
-        where: { userId: user.Id },
+        where: { userId: user.id },
         orderBy: { createdAt: "desc" },
         include: {
             _count: {
                 select: {
                     transactions: true,
-
                 }
             }
         }
