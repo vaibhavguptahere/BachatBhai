@@ -2,7 +2,7 @@ import { financeAgent } from "@/lib/agent";
 
 export async function POST(req) {
   try {
-    const { question } = await req.json(); // ✅ match frontend payload
+    const { question } = await req.json();
     const answer = await financeAgent(question);
 
     return new Response(JSON.stringify({ answer }), {
@@ -15,9 +15,4 @@ export async function POST(req) {
       status: 500,
     });
   }
-}
-
-// (Optional) for testing in browser
-export async function GET() {
-  return new Response("Agent API running ✅", { status: 200 });
 }
