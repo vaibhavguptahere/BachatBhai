@@ -42,21 +42,22 @@ export default function ModernChatAssistant() {
 
     // Simulate API call
     try {
-      const response = await fetch("/api/ask", {
+      const response = await fetch("/api/agent", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ question: message }),
+        body: JSON.stringify({ question: message }), // ✅ matches backend now
       });
 
+
       const data = await response.json();
-      
+
       const aiResponse = {
         id: Date.now() + 1,
         text: data.answer || data.error || "I can help you with that! Let me analyze your financial data and provide you with the information you need.",
         isUser: false,
         timestamp: new Date()
       };
-      
+
       setMessages(prev => [...prev, aiResponse]);
     } catch (error) {
       const errorResponse = {
@@ -67,7 +68,7 @@ export default function ModernChatAssistant() {
       };
       setMessages(prev => [...prev, errorResponse]);
     }
-    
+
     setIsLoading(false);
   };
 
@@ -110,20 +111,20 @@ export default function ModernChatAssistant() {
               </Button>
               <span className="text-lg font-semibold text-gray-900">Chats</span>
             </div>
-            
+
             <div className="flex items-center gap-2">
-              <Button 
-                variant="ghost" 
-                size="sm" 
+              <Button
+                variant="ghost"
+                size="sm"
                 className="text-gray-600 gap-2 text-sm"
                 onClick={startNewChat}
               >
                 <Plus size={14} />
                 New chat
               </Button>
-              <Button 
-                variant="ghost" 
-                size="icon" 
+              <Button
+                variant="ghost"
+                size="icon"
                 className="text-gray-600 h-8 w-8"
                 onClick={() => setIsOpen(false)}
               >
@@ -131,7 +132,7 @@ export default function ModernChatAssistant() {
               </Button>
             </div>
           </div>
-          
+
           {/* Main Content */}
           <div className="flex-1 flex flex-col">
             {messages.length === 0 ? (
@@ -233,7 +234,7 @@ function MessagesList({ messages, isLoading, messagesEndRef }) {
       {messages.map((message) => (
         <MessageBubble key={message.id} message={message} />
       ))}
-      
+
       {isLoading && (
         <div className="flex justify-start">
           <div className="bg-white border border-gray-200 rounded-lg p-3 max-w-xs">
@@ -248,7 +249,7 @@ function MessagesList({ messages, isLoading, messagesEndRef }) {
           </div>
         </div>
       )}
-      
+
       <div ref={messagesEndRef} />
     </div>
   );
@@ -257,11 +258,10 @@ function MessagesList({ messages, isLoading, messagesEndRef }) {
 function MessageBubble({ message }) {
   return (
     <div className={`flex ${message.isUser ? 'justify-end' : 'justify-start'}`}>
-      <div className={`max-w-[80%] p-3 rounded-lg text-sm ${
-        message.isUser 
-          ? 'bg-blue-600 text-white' 
+      <div className={`max-w-[80%] p-3 rounded-lg text-sm ${message.isUser
+          ? 'bg-blue-600 text-white'
           : 'bg-white border border-gray-200 text-gray-900'
-      }`}>
+        }`}>
         <p>{message.text}</p>
       </div>
     </div>
