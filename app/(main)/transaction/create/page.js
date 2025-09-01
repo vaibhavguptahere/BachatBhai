@@ -4,6 +4,10 @@ import React from 'react'
 import AddTransactionForm from '../_components/add-transaction-form';
 import { getTransaction } from '@/actions/transaction';
 
+// Prevent Next.js from prerendering this page
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 const createTransaction = async ({ searchParams }) => {
     const accounts = await getUserAccounts();
 
