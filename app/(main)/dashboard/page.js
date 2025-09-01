@@ -8,6 +8,8 @@ import { getCurrentBudget } from '@/actions/budget'
 import { BudgetProgress } from './_components/budget-progress'
 import DashboardOverview from './_components/dashboard-overview'
 
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 async function DashboardPage() {
 
